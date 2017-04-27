@@ -2,6 +2,9 @@ const TARGET_SIZE = 5;
 const POINT_SIZE = 1;
 const SPEED = 5;
 const TARGETS = 3;
+const TARGET_COLOR = 'green';
+const POINT_COLOR = 'white';
+const BACKGROUND_COLOR = 'black';
 
 interface Vector {
     x: number;
@@ -19,6 +22,8 @@ function createCanvas(document: Document) {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     document.body.appendChild(canvas);
+    getContext(canvas).fillStyle = BACKGROUND_COLOR;
+    getContext(canvas).fillRect(0, 0, canvas.width, canvas.height);
     return canvas;
 }
 
@@ -78,7 +83,7 @@ function drawRect(context: CanvasRenderingContext2D, position: Vector, size = 1)
 function createTargets(canvas: HTMLCanvasElement, number: number) {
     const targets: Vector[] = [];
     const context = getContext(canvas);
-    context.fillStyle = 'red';
+    context.fillStyle = TARGET_COLOR;
     for (let i = 0; i < number; i++) {
         const vector = getRandomCanvasCoordinates(canvas);
         targets.push(vector);
@@ -108,6 +113,6 @@ function step(game: Game) {
     const canvas = createCanvas(document);
     const targets = createTargets(canvas, TARGETS);
     const currentPosition = getRandomCanvasCoordinates(canvas);
-    getContext(canvas).fillStyle = 'black';
+    getContext(canvas).fillStyle = POINT_COLOR;
     step({canvas, currentPosition, targets});
 })(document);
